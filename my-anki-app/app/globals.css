@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* ================================================================
+  1. THEME VARIABLES 
+  ================================================================
+*/
+
+:root {
+  /* Default Light Mode Variables */
+  --background: #ffffff;
+  --bg-elevated: #f3f4f6;
+  --foreground: #111827;
+  --card-border: #e5e7eb;
+  --error: #fc3158;
+}
+
+/* System Dark Mode Fallback */
+/* Only applies if the user hasn't explicitly set a '.light' class */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: #030712;
+    --bg-elevated: #11151b;
+    --foreground: #f9fafb;
+    --card-border: #1f2937;
+  }
+}
+
+/* Manual Dark Mode Override */
+.dark {
+  --background: #030712;
+  --bg-elevated: #11151b;
+  --foreground: #f9fafb;
+  --card-border: #1f2937;
+}
+
+/* Manual Light Mode Override (Crucial for refresh persistence) */
+.light {
+  --background: #ffffff;
+  --bg-elevated: #f3f4f6;
+  --foreground: #111827;
+  --card-border: #e5e7eb;
+}
+
+/* ================================================================
+  2. TAILWIND THEME MAPPING
+  ================================================================
+*/
+
+@theme inline {
+  --color-background: var(--background);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-foreground: var(--foreground);
+  --color-card-border: var(--card-border);
+  --color-error: var(--error);
+}
+
+/* ================================================================
+  3. BASE STYLES & TRANSITIONS
+  ================================================================
+*/
+
+@layer base {
+  html,
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    /* Transition the actual properties for a smooth toggle effect */
+    transition: 
+      background-color 0.3s ease, 
+      color 0.3s ease, 
+      border-color 0.3s ease;
+  }
+
+  *,
+  *::before,
+  *::after {
+    border-color: var(--card-border);
+    /* Ensures nested cards and borders also transition smoothly */
+    transition: 
+      background-color 0.3s ease, 
+      color 0.3s ease, 
+      border-color 0.3s ease;
+  }
+}
+
+/* ================================================================
+  4. UTILITIES & INPUT FIXES
+  ================================================================
+*/
+
+/* Remove arrows/spinners from number inputs */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
